@@ -13,7 +13,7 @@ const Header = () => {
         <Link href="/" className="hover:text-zinc-950">
           Home
         </Link>
-        <Link href="posts" className="hover:text-zinc-950">
+        <Link href="/posts" className="hover:text-zinc-950">
           Posts
         </Link>
       </nav>
