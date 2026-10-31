@@ -7,14 +7,16 @@ type PostItem = {
   body: string;
 };
 
-async function PostDetails({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+async function PostDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const postId = Number(id);
+  if (!Number.isInteger(postId) || postId < 1) {
+    notFound();
+  }
+
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${id}`,
+    `https://jsonplaceholder.typicode.com/posts/${postId}`,
+    { cache: "no-store" },
   );
 
   if (response.status === 404) {
@@ -26,6 +28,9 @@ async function PostDetails({
   }
 
   const post: PostItem = await response.json();
+  if (!post.id) {
+    notFound();
+  }
 
   return (
     <article className="space-y-6">
